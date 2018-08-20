@@ -13,22 +13,30 @@ import Contact from "./Pages/Contact";
 import "./style/index.css";
 
 class Main extends Component {
+  // https://ebird.org/ws2.0/ref/region/list/country/world?fmt=json&key=dd5duaiiro1"
+  // api key: dd5duaiiro1
+  //https://ebird.org/ws2.0/ref/region/list/country/world?fmt=json&key=dd5duaiiro1
+
+  //https://ebird.org/ws2.0/ref/hotspot/info/{{locId}}' \
 
   getBirds(){
-    request('GET', 'https://jsonplaceholder.typicode.com/todos').end(
-      function(err, res){
-        if(res.ok) {
-          console.log(res.body);
-        } else {
-          console.log(err);
+    // request('GET', 'https://ebird.org/ws1.1/ref/taxa/ebird?cat=species&fmt=json&locale=en_US').then(
+    request('GET', 'https://ebird.org/ws2.0/ref/region/list/country/world?fmt=json&key=dd5duaiiro1').then(
+      function(taxa){
+        if(taxa.statusCode == 200) {
+          return taxa;
         }
-      }.bind(this)
+      }
+    ).then(
+      function(taxa){
+        console.log(taxa.body);
+      }
     )
   }
 
   componentWillMount(){
     console.log('will');
-    this.getBirds();
+    this.getBirds()
   }
 
   componentDidMount(){
@@ -43,7 +51,7 @@ class Main extends Component {
           <h1>Lyflist</h1>
           <ul className="header">
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/stuff">Stuff</NavLink></li>
+            <li><NavLink to="/CountryList">Country</NavLink></li>
             <li><NavLink to="/contact">Contact</NavLink></li>
           </ul>
           <div className="content">
